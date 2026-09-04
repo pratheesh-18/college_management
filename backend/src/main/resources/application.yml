@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: edusphere-backend
+  datasource:
+    url: jdbc:h2:mem:eduspheredb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+app:
+  jwt:
+    secret: 9a2f8c4e1b7d5a0f3e6c9b2d8a4f1e7c0b3a6d9e2f5c8b1a4d7e0f3c6b9a2f5e
+    expiration-ms: 86400000
+  upload:
+    dir: ./uploads/certificates
