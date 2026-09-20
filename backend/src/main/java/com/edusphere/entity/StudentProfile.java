@@ -27,6 +27,12 @@ public class StudentProfile {
 
     private Double cgpa;
 
+    private String phone;
+
+    private String gender;
+
+    private String dateOfBirth;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id")
     private Department department;
@@ -38,4 +44,8 @@ public class StudentProfile {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "academic_year_id")
     private AcademicYear academicYear;
+
+    private String leetcodeUsername;
+
+    private String githubUsername;
 }

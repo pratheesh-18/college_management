@@ -13,4 +13,5 @@ public interface AcademicRiskAlertRepository extends JpaRepository<AcademicRiskA
     List<AcademicRiskAlert> findByStudentUserEmail(String email);
     List<AcademicRiskAlert> findByRiskLevel(RiskLevel riskLevel);
     List<AcademicRiskAlert> findByResolvedFalse();
+    List<AcademicRiskAlert> findByStudentIdAndResolvedFalse(Long studentId);
 }

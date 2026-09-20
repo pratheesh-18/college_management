@@ -38,6 +38,8 @@ npm-debug.log*
 .env.test.local
 .env.production.local
 
+application-local.properties
+
 # Operating System & Temporary Files
 .DS_Store
 Thumbs.db

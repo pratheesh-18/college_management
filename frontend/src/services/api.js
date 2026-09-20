@@ -56,8 +56,33 @@ export const apiService = {
   saveSemesterMark: (data) => apiFetch('/faculty/marks/semester', { method: 'POST', body: JSON.stringify(data) }),
 
   // Student
+  getStudentHome: () => apiFetch('/v1/student/home'),
+  getStudentProfile: () => apiFetch('/v1/student/me/profile'),
+  updateStudentProfile: (data) => apiFetch('/v1/student/me/profile', { method: 'PUT', body: JSON.stringify(data) }),
+  getAcademicOverview: () => apiFetch('/v1/student/me/academic-overview'),
+  getAcademicHistory: () => apiFetch('/v1/student/me/academic-history'),
+  getInternalMarkAnalysis: () => apiFetch('/v1/student/me/internal-marks/analysis'),
+  getSubjectPerformance: () => apiFetch('/v1/student/me/subjects/performance'),
+  getStudentNotifications: () => apiFetch('/v1/student/notifications'),
+  markNotificationRead: (id) => apiFetch(`/v1/student/notifications/${id}/read`, { method: 'PATCH' }),
+  getAcademicReport: () => apiFetch('/v1/student/me/report'),
+  downloadAcademicReportPdf: async () => {
+    const token = getAuthToken();
+    const response = await fetch('/api/v1/student/me/report/pdf', {
+      headers: token ? { Authorization: `Bearer ${token}` } : {}
+    });
+    if (!response.ok) throw new Error('Failed to download PDF report');
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Academic_Report.pdf';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  },
   getStudentMarksSummary: () => apiFetch('/student/marks/summary'),
-  compareSemesters: () => apiFetch('/student/performance/compare'),
+  compareSemesters: () => apiFetch('/v1/student/me/performance/comparison'),
 
   // Certificates
   getMyCertificates: () => apiFetch('/certificates/my'),
@@ -72,6 +97,7 @@ export const apiService = {
   resolveRiskAlert: (id) => apiFetch(`/risk/alerts/${id}/resolve`, { method: 'POST' }),
 
   // AI Assistant
-  getAiHistory: () => apiFetch('/ai/history'),
-  askAi: (prompt) => apiFetch('/ai/chat', { method: 'POST', body: JSON.stringify({ prompt }) })
+  getAiHistory: () => apiFetch('/v1/student/ai/history'),
+  askAi: (prompt, conversationId) => apiFetch('/v1/student/ai/chat', { method: 'POST', body: JSON.stringify({ message: prompt, conversationId }) }),
+  askStudentAi: (message, conversationId) => apiFetch('/v1/student/ai/chat', { method: 'POST', body: JSON.stringify({ message, conversationId }) })
 };

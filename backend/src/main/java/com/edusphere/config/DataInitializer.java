@@ -33,6 +33,8 @@ public class DataInitializer implements CommandLineRunner {
     private final SemesterMarkRepository semesterMarkRepository;
     private final CertificateRepository certificateRepository;
     private final AcademicRiskAlertRepository riskAlertRepository;
+    private final NotificationRepository notificationRepository;
+    private final AcademicRecordRepository academicRecordRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -139,9 +141,14 @@ public class DataInitializer implements CommandLineRunner {
                 .registerNumber("IT2024001")
                 .currentSemester(3)
                 .cgpa(8.65)
+                .phone("+91 9876543210")
+                .gender("Male")
+                .dateOfBirth("2004-05-15")
                 .department(it)
                 .currentClass(it2a)
                 .academicYear(year2428)
+                .leetcodeUsername("rahulverma_dev")
+                .githubUsername("rahulverma-code")
                 .build());
 
         User studentUser2 = User.builder()
@@ -157,9 +164,14 @@ public class DataInitializer implements CommandLineRunner {
                 .registerNumber("IT2024002")
                 .currentSemester(3)
                 .cgpa(5.80)
+                .phone("+91 9876543211")
+                .gender("Female")
+                .dateOfBirth("2004-08-22")
                 .department(it)
                 .currentClass(it2a)
                 .academicYear(year2428)
+                .leetcodeUsername("ananyasen")
+                .githubUsername("ananyasen-dev")
                 .build());
 
         // 9. Internal Marks
@@ -177,17 +189,21 @@ public class DataInitializer implements CommandLineRunner {
         semesterMarkRepository.save(SemesterMark.builder().student(student1).subject(netIt).semester(2).gradePoints(8.5).letterGrade("A+").marksObtained(85.0).maxMarks(100.0).build());
         semesterMarkRepository.save(SemesterMark.builder().student(student1).subject(webTech).semester(2).gradePoints(9.5).letterGrade("O").marksObtained(94.0).maxMarks(100.0).build());
 
-        // 11. Certificates
+        // 11. Academic History Records
+        academicRecordRepository.save(AcademicRecord.builder().student(student1).academicYear(year2327).semester(1).gpa(8.50).totalCredits(14).passedSubjects(4).failedSubjects(0).recordedAt(LocalDateTime.now().minusMonths(12)).build());
+        academicRecordRepository.save(AcademicRecord.builder().student(student1).academicYear(year2428).semester(2).gpa(9.00).totalCredits(14).passedSubjects(4).failedSubjects(0).recordedAt(LocalDateTime.now().minusMonths(6)).build());
+
+        // 12. Certificates
         certificateRepository.save(Certificate.builder()
                 .student(student1)
-                .title("NPTEL Cloud Computing Certification")
-                .category("Online Course")
-                .issueOrganization("IIT Kharagpur / NPTEL")
-                .fileUrl("https://example.com/certs/nptel_cloud.pdf")
-                .status(VerificationStatus.APPROVED)
-                .reviewerComments("Verified successfully. Elite tag awarded.")
-                .uploadedAt(LocalDateTime.now().minusDays(5))
-                .build());
+        .title("NPTEL Cloud Computing Certification")
+        .category("Online Course")
+        .issueOrganization("IIT Kharagpur / NPTEL")
+        .fileUrl("https://example.com/certs/nptel_cloud.pdf")
+        .status(VerificationStatus.APPROVED)
+        .reviewerComments("Verified successfully. Elite tag awarded.")
+        .uploadedAt(LocalDateTime.now().minusDays(5))
+        .build());
 
         certificateRepository.save(Certificate.builder()
                 .student(student1)
@@ -200,7 +216,26 @@ public class DataInitializer implements CommandLineRunner {
                 .uploadedAt(LocalDateTime.now().minusDays(1))
                 .build());
 
-        // 12. Academic Risk Alert
+        // 13. Notifications
+        notificationRepository.save(Notification.builder()
+                .student(student1)
+                .title("🎉 Performance Improvement Alert")
+                .message("Your Java Programming Internal 2 score improved from 45/50 to 48/50 (+6% mark boost). Excellent work!")
+                .type("MARK_UPDATE")
+                .isRead(false)
+                .createdAt(LocalDateTime.now().minusHours(3))
+                .build());
+
+        notificationRepository.save(Notification.builder()
+                .student(student1)
+                .title("✅ Certificate Verified")
+                .message("Your 'NPTEL Cloud Computing Certification' was verified and approved by Dr. Ramesh Kumar.")
+                .type("CERTIFICATE_STATUS")
+                .isRead(true)
+                .createdAt(LocalDateTime.now().minusDays(2))
+                .build());
+
+        // 14. Academic Risk Alert
         riskAlertRepository.save(AcademicRiskAlert.builder()
                 .student(student2)
                 .riskLevel(RiskLevel.HIGH)

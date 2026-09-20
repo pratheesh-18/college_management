@@ -213,12 +213,14 @@ export const AdminDashboard = ({ activeTab }) => {
       )}
 
       {/* Department Overview Metric Cards */}
-      <div className="grid-4" style={{ marginBottom: '2rem' }}>
-        <StatCard title="IT Department Students" value={analytics?.totalStudents || 2} subtext="Enrolled IT Students" icon={GraduationCap} color="primary" />
-        <StatCard title="IT Faculty Staff" value={facultyList.length || 2} subtext="Assigned IT Lecturers" icon={Users} color="cyan" />
-        <StatCard title="Active IT Classes" value={classes.length || 2} subtext="Semester Sections" icon={Building2} color="emerald" />
-        <StatCard title="IT Risk Alerts" value={riskAlerts.filter(r => !r.resolved).length || 1} subtext="Academic Warnings" icon={AlertTriangle} color="rose" />
-      </div>
+      {(activeTab === 'dashboard' || !activeTab) && (
+        <div className="grid-4" style={{ marginBottom: '2rem' }}>
+          <StatCard title="IT Department Students" value={analytics?.totalStudents || 2} subtext="Enrolled IT Students" icon={GraduationCap} color="primary" />
+          <StatCard title="IT Faculty Staff" value={facultyList.length || 2} subtext="Assigned IT Lecturers" icon={Users} color="cyan" />
+          <StatCard title="Active IT Classes" value={classes.length || 2} subtext="Semester Sections" icon={Building2} color="emerald" />
+          <StatCard title="IT Risk Alerts" value={riskAlerts.filter(r => !r.resolved).length || 1} subtext="Academic Warnings" icon={AlertTriangle} color="rose" />
+        </div>
+      )}
 
       {/* 1. Academic Years View */}
       {(activeTab === 'dashboard' || activeTab === 'academic-years') && (

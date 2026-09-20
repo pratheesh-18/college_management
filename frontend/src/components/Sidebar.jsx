@@ -41,10 +41,10 @@ export const Sidebar = ({ activeTab, setActiveTab }) => {
         ];
       case 'STUDENT':
         return [
-          { id: 'dashboard', label: 'Academic Overview', icon: LayoutDashboard },
-          { id: 'my-marks', label: 'Internal & Sem Marks', icon: BookOpen },
-          { id: 'sem-compare', label: 'Semester Comparison', icon: TrendingUp },
+          { id: 'dashboard', label: 'Home Overview', icon: LayoutDashboard },
+          { id: 'profile', label: 'My Profile', icon: Users },
           { id: 'my-certificates', label: 'Certificates & Credit', icon: Award },
+          { id: 'notifications', label: 'Notifications', icon: CheckCircle2 },
           { id: 'ai-advisor', label: 'AI Academic Advisor', icon: Sparkles }
         ];
       default:
